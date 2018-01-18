@@ -14,9 +14,6 @@ for app in "${apps[@]}"; do
 done
 
 DIR="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" && pwd )"
-#echo $DIR
-#echo '!!!!1'
-#rm -Rf ${DIR}/edx-platform/node_modules
 
 #docker-compose exec lms bash -c 'rm -Rf /edx/app/edxapp/edx-platform/node_modules'
 docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
