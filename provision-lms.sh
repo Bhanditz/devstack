@@ -17,6 +17,7 @@ docker-compose exec lms bash -c 'rm -f /edx/app/edxapp/edx-platform/.prereqs_cac
 # This is a cheap try/except to catch an error related to FEDX-500
 {
     docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs' &&
+    echo 'Initial Paver Worked!'
 } || {
     docker-compose exec lms bash -c 'rm -f /edx/app/edxapp/edx-platform/.prereqs_cache/Node_prereqs.sha1 && rm -Rf /edx/app/edxapp/edx-platform/node_modules'
     rm -Rf ../edx-platform/node_modules
