@@ -12,15 +12,16 @@ apps=( lms studio )
 for app in "${apps[@]}"; do
     docker-compose $DOCKER_COMPOSE_FILES up -d $app
 done
+docker-compose exec lms bash -c 'rm -f /edx/app/edxapp/edx-platform/.prereqs_cache/Node_prereqs.sha1 && rm -Rf /edx/app/edxapp/edx-platform/node_modules'
 
-DIR="$( cd "$( dirname "$( dirname "${BASH_SOURCE[0]}" )" )" && pwd )"
-
-#docker-compose exec lms bash -c 'rm -Rf /edx/app/edxapp/edx-platform/node_modules'
-docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
-if [ $? -ne 0 ]; then
-    rm -Rf ${DIR}/edx-platform/node_modules
+# This is a cheap try/except to catch an error related to FEDX-500
+{
+    docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs' &&
+} || {
+    docker-compose exec lms bash -c 'rm -f /edx/app/edxapp/edx-platform/.prereqs_cache/Node_prereqs.sha1 && rm -Rf /edx/app/edxapp/edx-platform/node_modules'
+    rm -Rf ../edx-platform/node_modules
     docker-compose exec lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && NO_PYTHON_UNINSTALL=1 paver install_prereqs'
-fi
+}
 
 #Installing prereqs crashes the process
 docker-compose restart lms
