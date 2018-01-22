@@ -29,7 +29,7 @@ for arg in "$@"; do
     fi
 done
 
-if $container_error; then 
+if $container_error; then
     echo "Aborting course creation. Check your containers"
     exit
 fi
@@ -38,7 +38,7 @@ fi
 ## This will allow users to rerun the command multiple times and avoid duplicate course ids
 course_config_file="${@: -1}"
 if [[ ! -f $course_config_file ]] ; then
-    echo "$course_config_file does not exist. Must provide a valid course config file." 
+    echo "$course_config_file does not exist. Must provide a valid course config file."
     exit
 fi
 course_json=""
@@ -48,15 +48,15 @@ done < "${@: -1}"
 
 if $studio ; then
 	echo "Creating courses on studio."
-	docker-compose exec lms bash -c "source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker generate_courses '$course_json'"
+	sudo docker-compose exec lms bash -c "source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker generate_courses '$course_json'"
 fi
 
 if $ecommerce ; then
 	echo "Creating courses on ecommerce."
-	docker exec -t edx.devstack.ecommerce bash -c "source /edx/app/ecommerce/ecommerce_env && python /edx/app/ecommerce/ecommerce/manage.py generate_courses '$course_json'"
+	sudo docker exec -t edx.devstack.ecommerce bash -c "source /edx/app/ecommerce/ecommerce_env && python /edx/app/ecommerce/ecommerce/manage.py generate_courses '$course_json'"
 fi
 
 if $marketing ; then
 	echo "Creating courses on marketing."
-	docker exec -t edx.devstack.marketing bash -c "drush generate_courses '$course_json'"
+	sudo docker exec -t edx.devstack.marketing bash -c "drush generate_courses '$course_json'"
 fi

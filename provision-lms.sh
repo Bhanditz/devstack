@@ -10,7 +10,7 @@ apps=( lms studio )
 
 # Bring edxapp containers online
 for app in "${apps[@]}"; do
-    docker-compose $DOCKER_COMPOSE_FILES up -d $app
+    sudo docker-compose $DOCKER_COMPOSE_FILES up -d $app
 done
 
 sudo docker-compose exec lms bash -c 'rm -f /edx/app/edxapp/edx-platform/.prereqs_cache/Node_prereqs.sha1 && rm -Rf /edx/app/edxapp/edx-platform/node_modules'
@@ -37,5 +37,5 @@ sudo docker-compose exec lms bash -c '/edx/app/edx_ansible/venvs/edx_ansible/bin
 
 # Create static assets for both LMS and Studio
 for app in "${apps[@]}"; do
-    docker-compose exec $app bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
+    sudo docker-compose exec $app bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform && paver update_assets --settings devstack_docker'
 done

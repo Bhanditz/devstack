@@ -228,7 +228,7 @@ simply use the ``docker-compose restart`` command:
 
 .. code:: sh
 
-    docker-compose restart <service>
+    sudo docker-compose restart <service>
 
 ``<service>`` should be replaced with one of the following:
 
@@ -288,13 +288,13 @@ BUILD COMMANDS:
 
     git checkout master
     git pull
-    docker build -f docker/build/edxapp/Dockerfile . -t edxops/edxapp:latest
+    sudo docker build -f docker/build/edxapp/Dockerfile . -t edxops/edxapp:latest
 
 .. code:: sh
 
     git checkout clintonb/docker-devstack-idas
     git pull
-    docker build -f docker/build/ecommerce/Dockerfile . -t edxops/ecommerce:devstack
+    sudo docker build -f docker/build/ecommerce/Dockerfile . -t edxops/ecommerce:devstack
 
 The build commands above will use your local configuration, but will pull
 application code from the master branch of the application's repository. If you
@@ -605,7 +605,7 @@ Check the logs
 
 If a container stops unexpectedly, you can look at its logs for clues::
 
-    docker-compose logs lms
+    sudo docker-compose logs lms
 
 Update the code and images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
