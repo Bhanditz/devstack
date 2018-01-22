@@ -59,7 +59,7 @@ reset ()
         name="${BASH_REMATCH[1]}"
 
         if [ -d "$name" ]; then
-            cd $name;git reset --hard HEAD;git checkout master;git reset --hard origin/master;git pull;cd "$currDir"
+            cd $name;git reset --hard HEAD;git checkout open-release/ginkgo.2 || git checkout open-release/ginkgo.1 || git checkout master;git pull;cd "$currDir"
         else
             printf "The [%s] repo is not cloned. Continuing.\n" $name
         fi
