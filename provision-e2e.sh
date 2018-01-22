@@ -10,14 +10,14 @@ elif [ ! -d "$DEVSTACK_WORKSPACE" ]; then
 fi
 
 # Copy the test course tarball into the studio container
-sudo docker cp ${DEVSTACK_WORKSPACE}/edx-e2e-tests/upload_files/course.tar.gz edx.devstack.studio:/tmp/
+sudo -E docker cp ${DEVSTACK_WORKSPACE}/edx-e2e-tests/upload_files/course.tar.gz edx.devstack.studio:/tmp/
 
 # Extract the test course tarball
-sudo docker-compose exec studio bash -c 'cd /tmp && tar xzf course.tar.gz'
+sudo -E docker-compose exec studio bash -c 'cd /tmp && tar xzf course.tar.gz'
 
 # Import the course content
-sudo docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker import /tmp course'
+sudo -E docker-compose exec studio bash -c 'source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker import /tmp course'
 
 # Clean up the temp files
-sudo docker-compose exec studio bash -c 'rm /tmp/course.tar.gz'
-sudo docker-compose exec studio bash -c 'rm -r /tmp/course'
+sudo -E docker-compose exec studio bash -c 'rm /tmp/course.tar.gz'
+sudo -E docker-compose exec studio bash -c 'rm -r /tmp/course'

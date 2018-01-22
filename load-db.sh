@@ -17,5 +17,5 @@ then
 fi
 
 echo "Loading the $1 database..."
-sudo docker exec -i edx.devstack.mysql mysql -uroot $1 < $1.sql
+sudo -E docker exec -i edx.devstack.mysql mysql -uroot $1 < $1.sql
 echo "Finished loading the $1 database!"

@@ -48,15 +48,15 @@ done < "${@: -1}"
 
 if $studio ; then
 	echo "Creating courses on studio."
-	sudo docker-compose exec lms bash -c "source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker generate_courses '$course_json'"
+	sudo -E docker-compose exec lms bash -c "source /edx/app/edxapp/edxapp_env && python /edx/app/edxapp/edx-platform/manage.py cms --settings=devstack_docker generate_courses '$course_json'"
 fi
 
 if $ecommerce ; then
 	echo "Creating courses on ecommerce."
-	sudo docker exec -t edx.devstack.ecommerce bash -c "source /edx/app/ecommerce/ecommerce_env && python /edx/app/ecommerce/ecommerce/manage.py generate_courses '$course_json'"
+	sudo -E docker exec -t edx.devstack.ecommerce bash -c "source /edx/app/ecommerce/ecommerce_env && python /edx/app/ecommerce/ecommerce/manage.py generate_courses '$course_json'"
 fi
 
 if $marketing ; then
 	echo "Creating courses on marketing."
-	sudo docker exec -t edx.devstack.marketing bash -c "drush generate_courses '$course_json'"
+	sudo -E docker exec -t edx.devstack.marketing bash -c "drush generate_courses '$course_json'"
 fi

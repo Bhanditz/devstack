@@ -12,5 +12,5 @@ then
         docker-sync clean
         set -e
     fi
-    sudo docker-compose down -v
+    sudo -E docker-compose down -v
 fi

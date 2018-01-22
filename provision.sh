@@ -18,11 +18,11 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # Bring the databases online.
-sudo docker-compose up -d mysql mongo
+sudo -E docker-compose up -d mysql mongo
 
 # # Ensure the MySQL server is online and usable
 # echo "Waiting for MySQL"
-# until sudo docker exec -i edx.devstack.mysql mysql -uroot -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')" &> /dev/null
+# until sudo -E docker exec -i edx.devstack.mysql mysql -uroot -se "SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = 'root')" &> /dev/null
 # do
 #   printf "."
 #   sleep 1
@@ -35,19 +35,19 @@ sudo docker-compose up -d mysql mongo
 # echo -e "MySQL ready"
 #
 # echo -e "${GREEN}Creating databases and users...${NC}"
-# sudo docker exec -i edx.devstack.mysql mysql -uroot mysql < provision.sql
-# sudo docker exec -i edx.devstack.mongo mongo < mongo-provision.js
+# sudo -E docker exec -i edx.devstack.mysql mysql -uroot mysql < provision.sql
+# sudo -E docker exec -i edx.devstack.mongo mongo < mongo-provision.js
 #
 # ./provision-lms.sh
 #
 # # Nothing special needed for studio
-# sudo docker-compose $DOCKER_COMPOSE_FILES up -d studio
+# sudo -E docker-compose $DOCKER_COMPOSE_FILES up -d studio
 # ./provision-ecommerce.sh
 # ./provision-discovery.sh
 # ./provision-credentials.sh
 # ./provision-e2e.sh
 # ./provision-forum.sh
 #
-# sudo docker image prune -f
+# sudo -E docker image prune -f
 #
 # echo -e "${GREEN}Provisioning complete!${NC}"
