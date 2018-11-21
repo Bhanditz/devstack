@@ -23,7 +23,7 @@ else
     OPENEDX_GIT_BRANCH=master
 fi
 
-APPSEMBLER_EDX_PLATFORM_BRANCH="appsembler/tahoe/master"
+APPSEMBLER_EDX_PLATFORM_BRANCH="nishant/temp_tahoe_devstack_fixes"
 
 repos=(
     "https://github.com/edx/course-discovery.git"
