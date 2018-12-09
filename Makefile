@@ -212,7 +212,7 @@ xqueue_consumer-restart: ## Kill the XQueue development server. The watcher proc
 	docker exec -t edx.devstack.xqueue_consumer bash -c 'kill $$(ps aux | grep "manage.py run_consumer" | egrep -v "while|grep" | awk "{print \$$2}")'
 
 %-static: ## Rebuild static assets for the specified service container
-	docker exec -t edx.devstack.$* bash -c 'source /edx/app/$*/$*_env && cd /edx/app/$*/$*/ && make static'
+	docker exec -t edx.devstack.$* bash -c 'source /edx/app/$*/$*_env && cd /edx/app/$*/$*/ && make requirements && make static'
 
 lms-static: ## Rebuild static assets for the LMS container
 	docker exec -t edx.devstack.lms bash -c 'source /edx/app/edxapp/edxapp_env && cd /edx/app/edxapp/edx-platform/ && npm install && paver update_assets'
